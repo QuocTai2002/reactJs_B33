@@ -180,9 +180,23 @@ export default class home extends Component {
     if (foundItem) {
       // tăng số lượng sản phẩm;
       foundItem.quantity += 1;
+      Swal.fire({
+        position: 'end',
+        icon: 'success',
+        title: 'Đã tăng số lượng sản phẩm',
+        showConfirmButton: false,
+        timer: 1500
+      })
     } else {
       // thêm item mới vào giỏ hàng
       cloneCart.push(cartItem);
+      Swal.fire({
+        position: 'end',
+        icon: 'success',
+        title: 'Đã thêm vào giỏ hàng',
+        showConfirmButton: false,
+        timer: 1500
+      })
     }
     this.setState(
       {
@@ -217,7 +231,7 @@ export default class home extends Component {
         icon: 'success',
         title: 'Thanh Toán Thành Công',
         showConfirmButton: false,
-        timer: 1500
+        timer: 1000
       })
       this.quantityCart();
   })
@@ -230,7 +244,16 @@ incQuantity = (id) => {
   }) ;
   const quantity = cloneCart[index].quantity
   const quantityProduct = cloneCart[index].product.quantity;
-  if (quantityProduct === quantity ) return alert("số lượng sản phẩm trong kho đã hết") ;// nếu quá số lượng trong kho thì không thể tăng sản phẩm 
+  if (quantityProduct === quantity ) {
+    Swal.fire({
+      position: 'end',
+      icon: 'warning',
+      title: 'Số lượng sản phẩm trong kho đã hết',
+      showConfirmButton: false,
+      timer: 1200
+    })
+    return;
+  } ;// nếu quá số lượng trong kho thì không thể tăng sản phẩm 
   cloneCart[index].quantity += 1;
   this.setState({
     cart: cloneCart,
@@ -243,7 +266,16 @@ decQuantity = (id) =>{
     return cartItem.product.id === id;
   }) ;
   var quantity = cloneCart[index].quantity;
-  if (quantity === 1) return alert("không thể giảm số lượng sản phẩm về 0");
+  if (quantity === 1) {
+    Swal.fire({
+      position: 'end',
+      icon: 'warning',
+      title: 'không thể giảm số lượng sản phẩm về 0',
+      showConfirmButton: false,
+      timer: 1200
+    })
+    return;
+  }
   cloneCart[index].quantity -= 1;
   this.setState({
     cart: cloneCart,
